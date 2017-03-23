@@ -16,41 +16,47 @@
 #include <stdlib.h>
 #include <time.h>
 
+#define VALS 10
 /* Function Prototypes */
-void MaxMin(int numvals, int vals[], int max, int min);
+void MaxMin(int numvals, int vals[], int *min, int *max);
 
 /* Main Program */
 int main(int argc, char *argv[])
 {
-	int numvals = 10;
-	int vals[numvals];
-	int max = 0;
-	int min = 101;
-	MaxMin(numvals, vals, max, min);
+	int array[VALS];
+	int max = 0, min = 0;
+	MaxMin(VALS, array, &min, &max);
+
 	return 0;
 }
 
 /* Function Definitions */
-void MaxMin(int numvals, int vals[], int max, int min)
+void MaxMin(int numvals, int vals[], int *min, int *max)
 {
-	printf("The list is: \n");
-	srand(time(NULL));
-	for (int i = 0; i <= numvals; i++)
-	{
-	vals[i] = 1 + (int)rand() % 100;
-	printf("%d ", vals[i]);
-	
-	if (vals[i]>max)
-	{
-		max = vals[i];
-	}
-	if (vals[i]<min)
-	{
-		min = vals[i];
-	}
-	}
+	//seed a random number
+	srand((unsigned)time(NULL));
 
-	printf("\nThe maximum value is: %d\nThe minimum value is: %d\n", max, min);
+	printf("The list is: ");
+	for (int i = 0; i < numvals; i++)
+	{
+		vals[i] = 1 + (int) (rand() % (100 - 1));
+		printf(" %d", vals[i]);
+
+		if( i == 0)
+		{
+			*max = vals[0];
+			*min = vals[0];
+		}
+		if(vals[i] > *max)
+		{
+			*max = vals[i];
+		}
+		else if (vals[i] < *min)
+		{
+			*min = vals[i];
+		}
+	}
+	printf("\nThe maximum value is: %d\nThe minimum value is: %d\n", *max, *min);
 
 	return;
 }
